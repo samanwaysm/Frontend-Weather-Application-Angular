@@ -48,12 +48,21 @@ export class LocationService {
     );
   }
 
+  checkCity(city: string): Observable<any> {
+    console.log(city);
+    const url: string = `${this.api}/checkCity`;
+    return this.http.post(
+      url, 
+      { city }, 
+      this.httpOptions());
+  }
+
   httpOptions(){
-    const tocken: string = localStorage.getItem('token')?? "";
+    const token: string = localStorage.getItem('token')?? "";
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': tocken
+        'Authorization': token
       })
     }
   }

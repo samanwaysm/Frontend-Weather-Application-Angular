@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AdminServicesService } from '../../services/admin-services.service';
+import { AuthServiceService } from '../../../shared/services/auth-service.service';
 import { catchError, tap } from 'rxjs';
-import { AdminLogin } from '../../models/admin.interface';
+import { AdminLogin } from '../../../shared/models/admin.interface';
 
 @Component({
   selector: 'app-admin-login',
@@ -15,7 +15,7 @@ import { AdminLogin } from '../../models/admin.interface';
 export class AdminLoginComponent {
   loginForm!: FormGroup;
   isFormSubmited: boolean = false;
-  constructor(private adminService: AdminServicesService, private router: Router) {
+  constructor(private AuthServiceService: AuthServiceService, private router: Router) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(/^[A-Za-z0-9]+@gmail\.com$/)]),
       password: new FormControl('', [Validators.required])
@@ -29,7 +29,7 @@ export class AdminLoginComponent {
 
     const adminData: AdminLogin = this.loginForm.value;
 
-    this.adminService.login(adminData).pipe(
+    this.AuthServiceService.login(adminData).pipe(
       tap((res) => {
         this.isFormSubmited = false;
         if (res) {

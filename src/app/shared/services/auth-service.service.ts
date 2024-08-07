@@ -1,12 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AdminLogin } from '../models/admin.interface'
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminServicesService {
+export class AuthServiceService {
   private api: string = 'http://localhost:4000/api/admin';
 
   constructor(private http: HttpClient) {}
@@ -16,6 +16,14 @@ export class AdminServicesService {
     return this.http.post(
       url,
       adminData,
+      this.httpOptions()
+    );
+  }
+
+  verifyToken(): Observable<any> {
+    const url: string = `${this.api}/verifyToken`
+    return this.http.get(
+      url,
       this.httpOptions()
     );
   }

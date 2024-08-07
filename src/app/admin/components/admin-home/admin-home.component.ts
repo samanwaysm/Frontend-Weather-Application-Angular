@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdminHeaderComponent } from '../admin-header/admin-header.component';
+import { AdminHeaderComponent } from '../../../shared/components/admin-header/admin-header.component';
 import { RouterLink } from '@angular/router';
 import Location from '../../models/location.interface';
 import { LocationService } from '../../services/location.service';

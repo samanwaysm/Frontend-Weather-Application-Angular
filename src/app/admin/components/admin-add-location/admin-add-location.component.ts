@@ -5,7 +5,7 @@ import { catchError, tap } from 'rxjs';
 
 
 import Location from '../../models/location.interface';
-import { AdminHeaderComponent } from '../admin-header/admin-header.component';
+import { AdminHeaderComponent } from '../../../shared/components/admin-header/admin-header.component';
 import { LocationService } from '../../services/location.service'; 
 
 
