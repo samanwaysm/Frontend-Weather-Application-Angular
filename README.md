@@ -9,7 +9,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Installation
 Run `npm i` to install the project dependencies.
 
-## Create Excel File (.xlsc)
+## Create Excel File (.xlsx)
 
 To create an Excel file according to the given image, follow these steps:
 
