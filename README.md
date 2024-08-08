@@ -13,7 +13,7 @@ Run `npm i` to install the project dependencies.
 
 To create an Excel file according to the given image, follow these steps:
 
-![Example Image](src/assets/images/excel_exmp.png)
+[Example Image](src/assets/images/excel_exmp.png)
 
 
 ## Further help
