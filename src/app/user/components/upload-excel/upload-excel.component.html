@@ -1,7 +1,14 @@
 <div class="flex flex-col items-center justify-center min-h-screen space-y-4 bg-gray-100">
     <div class="flex flex-col items-center space-y-2">
         <h2 class="text-2xl font-semibold text-gray-700 mb-4">Select Your Excel File</h2>
-      <input 
+        <img 
+      src="assets/excel_exmp.png" 
+      alt="Excel File Reference" 
+      class="w-65 mb-2 rounded-lg shadow-md"/>
+
+      <p class="text-sm text-gray-600 text-center">Please select an Excel file (.xlsx) that follows the format shown above.</p>
+    
+        <input 
         type="file" 
         (change)="onFileChange($event)" 
         class="block w-80 px-4 py-2 text-lg text-gray-500 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-lg file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -12,25 +19,25 @@
       >
         Upload
       </button>
+      <div *ngIf="loading" class="flex items-center justify-center mt-4">
+        <div class="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+      </div>
+      <div *ngIf="errorMessage" class="bg-red-100 text-red-800 p-4 rounded-lg">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
-  <!-- <div *ngIf="weatherData" class="full-page-container">
-    <div class="weather-report-wrapper">
-      <app-weather-report [weatherData]="weatherData"></app-weather-report>
-    </div>
-  </div> -->
-  <!-- <div *ngIf="weatherData" class="flex items-center justify-center min-h-screen bg-gray-100 p-6">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
-      <app-weather-report [weatherData]="weatherData"></app-weather-report>
-    </div>
-  </div> -->
-  <!-- <div class="flex flex-col items-center justify-center min-h-screen space-y-4 bg-gray-100">
-    <div class="bg-gray-100 p-6 rounded-lg shadow-lg w-full max-w-4xl">
-      <app-weather-report></app-weather-report>
-    </div>
-  </div> -->
-  <div class="flex flex-col items-center justify-center w-full min-h-screen space-y-4 bg-gray-100">
+
+   <!-- Weather Report Section -->
+   <div #weatherContainer class="flex flex-col items-center justify-center w-full min-h-screen space-y-4 bg-gray-100">
     <div class="bg-white rounded-lg shadow-lg w-full">
-      <app-weather-report></app-weather-report>
+      <ng-container *ngIf="weatherData; else noData">
+        <app-weather-report [weatherData]="weatherData"></app-weather-report>
+      </ng-container>
+      <ng-template #noData>
+        <div class="flex flex-col items-center justify-center min-h-screen space-y-4 bg-gray-100">
+          <p class="text-lg text-gray-700">No weather data available. Please upload an Excel file to see the weather report.</p>
+        </div>
+      </ng-template>
     </div>
   </div>

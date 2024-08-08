@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { ExcelServiceService } from '../../services/excel-service.service'
 import { WeatherServiceService } from '../../services/weather-service.service';
@@ -16,6 +16,10 @@ import { WeatherReportComponent } from '../weather-report/weather-report.compone
 export class UploadExcelComponent {
   file: File | null = null;
   weatherData: any;
+  errorMessage: string | null = null;
+  loading: boolean = false;
+
+  @ViewChild('weatherContainer') weatherContainer!: ElementRef;
   
   constructor(
     private excelService: ExcelServiceService,
@@ -28,20 +32,30 @@ export class UploadExcelComponent {
     this.file = event.target.files[0];
   }
 
-
   uploadExcel() {
     if (this.file) {
-      this.excelService.parseExcel(this.file).then((data) => {
-        console.log(data);
-        this.checkDataInDatabase(data);
+      this.excelService.parseExcel(this.file).then((data: any[]) => {
+        this.errorMessage = null; 
+        if (this.validateData(data)) {
+          console.log(data);
+          this.checkDataInDatabase(data);
+        } else {
+          this.errorMessage = 'The file format is incorrect. Please ensure the file contains the correct data format.';
+        }
       }).catch((error) => {
         console.error('Error parsing Excel file:', error);
+        this.errorMessage = 'An error occurred while parsing the Excel file.';
       });
     }
   }
 
+  validateData(data: any[]): boolean {
+    return data.every(row => row.length === 4);
+  }
+
   checkDataInDatabase(data: any[]): void {
     data.forEach((row: any[]) => {
+      this.loading = true
       const [country, state, district, city] = row;
       this.locationService.checkCity(city).subscribe((response: any) => {
         if (response && response.exists) {
@@ -56,9 +70,19 @@ export class UploadExcelComponent {
   fetchWeather(city: string): void {
     this.weatherService.getWeather(city).subscribe((data: any) => {
       this.weatherData = data;
+      this.loading = false;
+      this.scrollToWeatherReport();
       console.log(this.weatherData);
     }, (error: any) => {
       console.error('Error fetching weather data:', error);
+      this.loading = false;
     });
   }
+
+  scrollToWeatherReport(): void {
+    if (this.weatherContainer) {
+      this.weatherContainer.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
 }
