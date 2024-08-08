@@ -13,7 +13,7 @@ Run `npm i` to install the project dependencies.
 
 To create an Excel file according to the given image, follow these steps:
 
-[Image](https://github.com/samanwaysm/Frontend-Weather-Application-Angular/src/assets/images/excel_exmp.png)
+[Image](https://github.com/samanwaysm/Frontend-Weather-Application-Angular/src/assets/excel_exmp.png)
 
 
 ## Further help
